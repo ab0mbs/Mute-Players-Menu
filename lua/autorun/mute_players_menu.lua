@@ -29,12 +29,13 @@ if CLIENT then
 	local muteAdmins = 0
 	
 	-- Get window title and admin mute setting from ConVar
-	if (GetConVar("lmp_mute_admins"):GetInt() > 0) then
-		windowTitle = "Mute Players"
-		muteAdmins = 1
-	else
+	if (GetConVarString("lmp_mute_admins") == "0") then
 		windowTitle = "Mute Players - Note: Admins cannot be muted"
 		muteAdmins = 0
+	else
+		windowTitle = "Mute Players"
+		muteAdmins = 1
+
 	end
 	
 	-- Create the DFrame to house the stuff
@@ -134,12 +135,10 @@ if CLIENT then
 			
 			-- Check if the player is and admin. If so, don't let players mute them
 			-- Comment out this section to disable this feature
-			if (muteAdmins) then
-				if (pl:IsAdmin()) then
-					pl.Mute:SetDisabled(true)
-				else
-					pl.Mute:SetDisabled(false)
-				end
+			if (pl:IsAdmin() and muteAdmins == 0) then
+				pl.Mute:SetDisabled(true)
+			else
+				pl.Mute:SetDisabled(false)
 			end
 			----- Admin mute disable section end ------
 	end
@@ -153,14 +152,13 @@ if CLIENT then
 end)
 end
 
-
--- Check if we are a Server
-if SERVER then
-
 -- Create ConVars
 CreateConVar("lmp_mute_admins", "0", {FCVAR_REPLICATED})
 CreateConVar("lmp_text_command", "mute", {FCVAR_REPLICATED})
 
+
+-- Check if we are a Server
+if SERVER then
 	-- Add a hook to player chat
     hook.Add("PlayerSay", "LepMutePlayers", function(Player, Text, Public)
 	
