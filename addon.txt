@@ -1,0 +1,10 @@
+"AddonInfo"
+{
+	"name"				"Mute Players Menu"
+	"version"			"1.00"
+	"author_name"			"The Leprechaun"
+	"author_email"			"the.leprechaun.server@gmail.com"
+	"author_url"			"http://github.com/ab0mbs/Mute-Players-Menu"
+	"info"				"Say defined text command in chat to open menu"
+	"override"			"0"
+}
