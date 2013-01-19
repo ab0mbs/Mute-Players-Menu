@@ -1,7 +1,7 @@
 --
 -- Mute Players Menu
 --
--- Version 1.5
+-- Version 1.6
 -- Author: The Leprechaun
 -- Email: the.leprechaun.server@gmail.com
 --
@@ -54,7 +54,7 @@ if CLIENT then
 	-- Create a DPanelList. Used for it's scrollbar
 	DermaScrollPanel = vgui.Create("DPanelList", DermaFrame)
 	DermaScrollPanel:SetPos(6, 25)
-	DermaScrollPanel:SetSize(FrameWidth-12, FrameHeight-25-6)
+	DermaScrollPanel:SetSize(FrameWidth-12, FrameHeight-50-12)
 	DermaScrollPanel:SetSpacing(2)
 	DermaScrollPanel:SetPadding(2)
 	DermaScrollPanel:SetVisible(true)
@@ -66,88 +66,6 @@ if CLIENT then
 	
 	-- Function to create player panels and add them to DermaScrollPanel
 	function CreatePlayerPanels()
-	
-	-- Create a panel to mute all
-	muteAllPanel = vgui.Create("DPanel")
-	muteAllPanel:SetWide(scrollWide)
-	muteAllPanel:SetVisible(true)
-
-	-- Get the width of muteAllPanel
-	muteAllPanelWide = muteAllPanel:GetWide()
-	
-	-- Create a DLabel for the mute all label
-	muteAllLabel = vgui.Create( "DLabel", muteAllPanel )
-	muteAllLabel:SetFont("NameDefault")
-	muteAllLabel:SetText("Mute All")
-	muteAllLabel:SetWide(muteAllPanelWide - 50)
-	muteAllLabel:SetPos(3,3)
-	muteAllLabel:SetColor(Color(0,0,0,255))
-	
-	-- Create a DImageButton for the mute icon
-	muteAllMuteButton = vgui.Create( "DImageButton", muteAllPanel )
-	muteAllMuteButton:SetSize( 20, 20 )
-
-	-- Set the icon to mute icon
-	muteAllMuteButton:SetImage( "icon32/muted.png" )
-
-	-- Function when muteAllMuteButton is clicked
-	muteAllMuteButton.DoClick = function()
-	
-		for id2, pl2 in pairs( plyrs ) do
-			if (pl2:IsAdmin() and muteAdmins == 0) then
-				if (pl2:IsMuted() == true) then
-					pl2:SetMuted(false)
-				end
-			else
-				if (pl2:IsMuted() == false) then
-					pl2:SetMuted(true)
-				end
-			end
-
-		end
-
-		-- Clear our DermaScrollPanel
-		DermaScrollPanel:Clear()
-
-		-- Call the function to redraw the DermaScrollPanel
-		CreatePlayerPanels()
-	end
-	
-	-- Create a DImageButton for the mute icon
-	muteAllUnMuteButton = vgui.Create( "DImageButton", muteAllPanel )
-	muteAllUnMuteButton:SetSize( 20, 20 )
-
-	-- Set the icon to mute icon
-	muteAllUnMuteButton:SetImage( "icon32/unmuted.png" )
-
-	-- Function when muteAllUnMuteButton is clicked
-	muteAllUnMuteButton.DoClick = function()
-	
-		for id2, pl2 in pairs( plyrs ) do
-			if (pl2:IsMuted() == true) then
-				pl2:SetMuted(false)
-			end
-		end
-
-		-- Clear our DermaScrollPanel
-		DermaScrollPanel:Clear()
-
-		-- Call the function to redraw the DermaScrollPanel
-		CreatePlayerPanels()
-	end
-	
-	-- Add the player panel to the DermaScrollPanel
-	DermaScrollPanel:AddItem(muteAllPanel)
-
-	-- Create the layout for the panel and its children
-	muteAllPanel:InvalidateLayout(true)
-	muteAllPanel.PerformLayout = function()
-	muteAllPanelWide = muteAllPanel:GetWide()
-	muteAllLabel:SetWide(muteAllPanelWide - 50)
-	muteAllMuteButton:SetPos(muteAllPanelWide - 26 - 20,3)
-	muteAllUnMuteButton:SetPos(muteAllPanelWide - 20 - 3,3)
-	muteAllLabel:SetPos(3,3)
-	end
 	
 	-- Loop through players
 	for id, pl in pairs( plyrs ) do
@@ -230,6 +148,88 @@ if CLIENT then
 	-- This is called when the console command is run
 	-- Has to be below the function, otherwise the function would be nonexistent when called
 	CreatePlayerPanels()
+	
+		-- Create a panel to mute all
+	muteAllPanel = vgui.Create("DPanel", DermaFrame)
+	muteAllPanel:SetWide(scrollWide)
+	muteAllPanel:SetVisible(true)
+	muteAllPanel:SetBackgroundColor(Color(70,192,255,255))
+
+	-- Get the width of muteAllPanel
+	muteAllPanelWide = muteAllPanel:GetWide()
+	
+	-- Create a DLabel for the mute all label
+	muteAllLabel = vgui.Create( "DLabel", muteAllPanel )
+	muteAllLabel:SetFont("NameDefault")
+	muteAllLabel:SetText("Mute All")
+	muteAllLabel:SetWide(muteAllPanelWide - 50)
+	muteAllLabel:SetPos(3,3)
+	muteAllLabel:SetColor(Color(0,0,0,255))
+	
+	-- Create a DImageButton for the mute icon
+	muteAllMuteButton = vgui.Create( "DImageButton", muteAllPanel )
+	muteAllMuteButton:SetSize( 20, 20 )
+
+	-- Set the icon to mute icon
+	muteAllMuteButton:SetImage( "icon32/muted.png" )
+
+	-- Function when muteAllMuteButton is clicked
+	muteAllMuteButton.DoClick = function()
+	
+		for id2, pl2 in pairs( plyrs ) do
+			if (pl2:IsAdmin() and muteAdmins == 0) then
+				if (pl2:IsMuted() == true) then
+					pl2:SetMuted(false)
+				end
+			else
+				if (pl2:IsMuted() == false) then
+					pl2:SetMuted(true)
+				end
+			end
+
+		end
+
+		-- Clear our DermaScrollPanel
+		DermaScrollPanel:Clear()
+
+		-- Call the function to redraw the DermaScrollPanel
+		CreatePlayerPanels()
+	end
+	
+	-- Create a DImageButton for the mute icon
+	muteAllUnMuteButton = vgui.Create( "DImageButton", muteAllPanel )
+	muteAllUnMuteButton:SetSize( 20, 20 )
+
+	-- Set the icon to mute icon
+	muteAllUnMuteButton:SetImage( "icon32/unmuted.png" )
+
+	-- Function when muteAllUnMuteButton is clicked
+	muteAllUnMuteButton.DoClick = function()
+	
+		for id2, pl2 in pairs( plyrs ) do
+			if (pl2:IsMuted() == true) then
+				pl2:SetMuted(false)
+			end
+		end
+
+		-- Clear our DermaScrollPanel
+		DermaScrollPanel:Clear()
+
+		-- Call the function to redraw the DermaScrollPanel
+		CreatePlayerPanels()
+	end
+	
+	muteAllPanel:SetPos(6,FrameHeight-25-6)
+
+	-- Create the layout for the panel and its children
+	muteAllPanel:InvalidateLayout(true)
+	muteAllPanel.PerformLayout = function()
+	muteAllPanelWide = muteAllPanel:GetWide()
+	muteAllLabel:SetWide(muteAllPanelWide - 50)
+	muteAllMuteButton:SetPos(muteAllPanelWide - 26 - 20,3)
+	muteAllUnMuteButton:SetPos(muteAllPanelWide - 20 - 3,3)
+	muteAllLabel:SetPos(3,3)
+	end
 	
 end)
 end
