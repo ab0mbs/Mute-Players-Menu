@@ -1,7 +1,7 @@
 --
 -- Mute Players Menu
 --
--- Version 1.0
+-- Version 1.5
 -- Author: The Leprechaun
 -- Email: the.leprechaun.server@gmail.com
 --
